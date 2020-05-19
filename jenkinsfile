@@ -6,7 +6,8 @@ pipeline {
         stage('cloning branch') {
             
             steps {
-                  sh ' ls -al'
+                  sh ' ls -al;pwd'
+                
                 
 
                 }
