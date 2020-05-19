@@ -41,15 +41,7 @@ pipeline {
                   userRemoteConfigs: [[credentialsId: '83ecbcda-8918-4e88-b90e-664c21ff0829', url: params.gitPath]]])
         }
         }
-        stage('yy'){
-            steps{
-            sh """
-             git config --global user.name mingmingkong1
-             git config --global user.email kongmingming2007@126.com
-             git config --global http.sslverify false
-            """
-            }
-        }
+       
         stage('cloning branch') {
             
             when {
