@@ -4,6 +4,7 @@ pipeline {
 
     stages {
         stage('cloning branch') {
+            dir("kongmmdir")
             
             steps {
                   sh ' ls -al;pwd'
