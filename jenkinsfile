@@ -42,11 +42,13 @@ pipeline {
         }
         }
         stage('yy'){
+            steps{
             sh """
              git config --global user.name mingmingkong1
              git config --global user.email kongmingming2007@126.com
              git config --global http.sslverify false
             """
+            }
         }
         stage('cloning branch') {
             
