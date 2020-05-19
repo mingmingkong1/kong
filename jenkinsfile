@@ -3,8 +3,12 @@ pipeline {
     agent any
 
     stages {
+        stage('test'){
+            steps{
+        checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '83ecbcda-8918-4e88-b90e-664c21ff0829', url: 'https://github.com/mingmingkong1/kong.git']]])
+        }
+        }
         stage('cloning branch') {
-            steps {dir("kongmmdir")}
             
             steps {
                   sh ' ls -al;pwd'
