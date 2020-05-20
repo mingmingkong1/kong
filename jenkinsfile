@@ -8,7 +8,17 @@ def makeBranch(String branchName) {
     """
 }
 
+def makeTag(String tagName) {
+    sh """
+    git tag ${tagName}
+    git push origin ${tagName}
+    """
+}
 
+def createTag(repository, sourceTag, targetTag) {
+
+    makeTag(targetTag)
+}
 
 
 def createBranch1(repository, sourceBranch, targetBranch) {
@@ -53,9 +63,23 @@ pipeline {
                     if (params.gitPath) {
                         createBranch1(params.gitPath, params.sourceBr,params.targetBr)
                     }
+                    
 
                 }
             }
+          
         }
      }
 }
+      stage('cloning tag') {
+            when {
+                expression { params.branchOrTag == 'tag' }
+            }
+          steps {
+              script{
+                  if (params.gitPath) {
+                        createTag(params.gitPath, params.sourceBr,params.targetBr)
+                    }
+                  
+              }
+           }
