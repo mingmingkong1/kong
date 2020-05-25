@@ -20,6 +20,7 @@ pipeline {
         stage('clonefirst'){
             steps{
                 echo params.user
+                echo params.password
         }
         }
        
