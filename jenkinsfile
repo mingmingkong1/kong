@@ -1,38 +1,14 @@
 #!/usr/bin/env groovy
 
 
-def makeBranch(String branchName) {
-    sh """
-    git checkout -b ${branchName}
-     git push --set-upstream origin ${branchName}
-    """
-}
-
-def makeTag(String tagName) {
-    sh """
-    git tag ${tagName}
-    git push origin ${tagName}
-    """
-}
-
-def createTag(repository, sourceTag, targetTag) {
-
-    makeTag(targetTag)
-}
-
-
-def createBranch1(repository, sourceBranch, targetBranch) {
-
-    makeBranch(targetBranch)
-}
 
 properties([
         parameters([
-                choice(choices: 'branch\ntag', description: 'create branch or tag in github?', name: 'branchOrTag'),
               
-                string(defaultValue: '', description: 'input the git repo', name: 'gitPath'),
-                string(defaultValue: '', description: 'input the source branch or tag name you want to copy from', name: 'sourceBr'),
-                string(defaultValue: '', description: 'input the target branch or tag name you want to copy to', name: 'targetBr')
+              
+                password(defaultValue: '', description: '', name: 'password'),
+                string(defaultValue: '', description: '', name: 'user'),
+                
         ])
 ])
 
@@ -43,44 +19,11 @@ pipeline {
     stages {
         stage('clonefirst'){
             steps{
-                checkout([$class: 'GitSCM', 
-                  branches: [[name: '*/master']], 
-                  doGenerateSubmoduleConfigurations: false, 
-                  extensions: [], 
-                  submoduleCfg: [], 
-                  userRemoteConfigs: [[credentialsId: 'kmm', url: params.gitPath]]])
+                echo $params.user
         }
         }
        
-        stage('cloning branch') {
-            
-            when {
-                expression { params.branchOrTag == 'branch' }
-            }
-            steps {
-                script {
-      
-                    if (params.gitPath) {
-                        createBranch1(params.gitPath, params.sourceBr,params.targetBr)
-                    }
-                    
-
-                }
-            }
-          
-        }
+        
      }
 }
-      stage('cloning tag') {
-            when {
-                expression { params.branchOrTag == 'tag' }
-            }
-          steps {
-              script{
-                  if (params.gitPath) {
-                        createTag(params.gitPath, params.sourceBr,params.targetBr)
-                    }
-                  
-              }
-           }
-      }
+    
