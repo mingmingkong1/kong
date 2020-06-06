@@ -1,32 +1,10 @@
-#!/usr/bin/env groovy
-
-
-
-properties([
-        parameters([
-              
-              
-                password(defaultValue: '', description: '', name: 'password'),
-                string(defaultValue: '', description: '', name: 'user'),
-                
-        ])
-])
-
-
 pipeline {
-    agent any
-
+    agent any 
     stages {
-        stage('clonefirst'){
-            steps{
-                echo params.user
-                
-                sh 'printenv'
-                echo params.password
+        stage('Stage 1') {
+            steps {
+                echo 'Hello world!' 
+            }
         }
-        }
-       
-        
-     }
-}
-    
+    }
+}  
